@@ -51,5 +51,6 @@ async def finish_booking(message: types.Message, state: FSMContext):
                    f"Номер телефона: {state_data['telephone']}"])
     await state.finish()
     #отправка данных на битрекс
-    await message.answer(f"Бронь успешно создана\n{text}", reply_markup=await all_finish_booking())
+    await message.answer(f"{text}")
+    await message.answer(f"Бронь успешно создана", reply_markup=await all_finish_booking())
 
