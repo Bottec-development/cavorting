@@ -7,3 +7,5 @@ pillow
 Django
 psycopg2-binary==2.8.6
 psycopg2
+aiogram-calendar
+https://github.com/Birdi7/inline-timepicker/archive/master.zip
