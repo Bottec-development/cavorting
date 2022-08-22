@@ -17,6 +17,8 @@ REDIS_DB_JOIN_LIST = int(os.getenv("REDIS_DB_JOIN_LIST", default=2))
 
 ADMIN_TELEPHONE = str(os.getenv("ADMIN_TELEPHONE"))
 
+SITE_URL = str(os.getenv('SITE_URL'))
+
 admins = [
     417804053
 ]
