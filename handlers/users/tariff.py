@@ -4,7 +4,7 @@ from aiogram.utils.markdown import hbold
 
 from keyboards.callback_datas import standard_tariff, mini_office_choice
 from keyboards.inline.tariff_kb import main_tariff_kb, name_and_description, standard_tariff_kb, mini_office_kb, \
-    mini_office_description, smart_office_kb
+    mini_office_description, smart_office_kb, back_to_tariff
 from loader import dp
 
 
@@ -68,20 +68,25 @@ async def information(call: types.CallbackQuery, callback_data: dict):
 
 @dp.callback_query_handler(mini_office_choice.filter(type="2"))
 async def information(call: types.CallbackQuery, callback_data: dict):
+    await call.message.delete()
     person = callback_data.get("person")
     office_description = await mini_office_description()
     if person == "1_person":
         office_name = f"Мини-офис на 1 персону"
+        photo = InputFile('img/person_3.jpg')
     elif person == "2_person":
         office_name = f"Мини-офис на 2 персоны"
+        photo = InputFile('img/person_3.jpg')
     else:
         office_name = f"Мини-офис на 4 персоны"
+        photo = InputFile('img/person_4.jpg')
     string = [f"{hbold(office_name)}\n", office_description[person]]
-    await call.message.edit_text(text="\n".join(string), reply_markup=await standard_tariff_kb())
+    await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(), photo=photo)
 
 
 @dp.callback_query_handler(mini_office_choice.filter(type="3"))
 async def information(call: types.CallbackQuery, callback_data: dict):
+    await call.message.delete()
     person = callback_data.get("person")
     office_description = await mini_office_description()
     if person == "8_person":
@@ -92,3 +97,10 @@ async def information(call: types.CallbackQuery, callback_data: dict):
         photo = InputFile('img/person_20.jpg')
     string = [f"{hbold(office_name)}\n", office_description[person]]
     await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(), photo=photo)
+
+
+@dp.callback_query_handler(text='send_phone_tariff')
+async def send_phone(call: types.CallbackQuery):
+    await call.message.delete()
+    await call.message.answer_contact(phone_number="89295000656", first_name="Коворкинг", last_name="Калибр",
+                                      reply_markup=await back_to_tariff())

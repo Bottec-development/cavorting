@@ -102,18 +102,18 @@ async def mini_office_description():
                '\n\n* - после приобретения тарифа "2 месяца" / для клиентов, ' \
                'использовавших любую из основных услуг в коворкинге "Калибр" в период 01.01.2022 - 01.06.2022'
     person_20 = "Доступ 24/7" \
-               "\nКондиционер" \
-               "\nПереговорная на 4 персоны - 8 ч" \
-               "\nПереговорная на 8 персон - 8 ч." \
-               "\nПечать ч/б - 500 л." \
-               '\nИнтерактивная зона + библиотека ("Будни") - 3 ч.' \
-               '\nКонференц-зал до 50 мест ("Будни") - 2 ч.' \
-               "\n\nЦены указаны за месяц пользования услугой." \
-               '\n"Месяц" - 349900 ₽' \
-               '\n"2 месяца" - 314910 ₽' \
-               '\n"Продление"* - 297415 ₽' \
-               '\n"6 месяцев" - 291120 ₽' \
-               '\n\n* - после приобретения тарифа "2 месяца" / для клиентов, ' \
+                "\nКондиционер" \
+                "\nПереговорная на 4 персоны - 8 ч" \
+                "\nПереговорная на 8 персон - 8 ч." \
+                "\nПечать ч/б - 500 л." \
+                '\nИнтерактивная зона + библиотека ("Будни") - 3 ч.' \
+                '\nКонференц-зал до 50 мест ("Будни") - 2 ч.' \
+                "\n\nЦены указаны за месяц пользования услугой." \
+                '\n"Месяц" - 349900 ₽' \
+                '\n"2 месяца" - 314910 ₽' \
+                '\n"Продление"* - 297415 ₽' \
+                '\n"6 месяцев" - 291120 ₽' \
+                '\n\n* - после приобретения тарифа "2 месяца" / для клиентов, ' \
                 'использовавших любую из основных услуг в коворкинге "Калибр" в период 01.01.2022 - 01.06.2022'
     return {
         '1_person': person_1,
@@ -174,8 +174,15 @@ async def smart_office_kb():
 async def standard_tariff_kb():
     kb = InlineKeyboardMarkup(row_width=2)
     button_1 = InlineKeyboardButton(text="Забронировать", callback_data=f'send_phone')
-    button_2 = InlineKeyboardButton(text="Позвонить", callback_data=f'send_phone')
+    button_2 = InlineKeyboardButton(text="Позвонить", callback_data=f'send_phone_tariff')
     button_3 = InlineKeyboardButton(text='⬅️ Назад', callback_data=f'tariff_with_photo')
     kb.row(button_1, button_2)
     kb.insert(button_3)
+    return kb
+
+
+async def back_to_tariff():
+    kb = InlineKeyboardMarkup(row_width=1)
+    to_information = InlineKeyboardButton(text='⬅️ Назад', callback_data=f'tariff_with_photo')
+    kb.insert(to_information)
     return kb
