@@ -6,7 +6,7 @@ async def menu_keyboard():
                                   inline_keyboard=[
                                       [
                                           InlineKeyboardButton(text='Тарифы',
-                                                               callback_data=f'rates'),
+                                                               callback_data=f'tariff'),
                                           InlineKeyboardButton(text='Парковка',
                                                                callback_data=f'parling'),
                                       ],

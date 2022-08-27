@@ -3,5 +3,6 @@ from .meetingrooms import dp
 from .booking import dp
 from .event_space import dp
 from .how_to_get import dp
+from .tariff import dp
 
 __all__ = ["dp"]
