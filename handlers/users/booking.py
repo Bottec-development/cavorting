@@ -16,6 +16,7 @@ async def acceptBooking(call: types.CallbackQuery, state: FSMContext):
     await MeetRoomBookingStage_2.fio_or_company_name.set()
     await call.message.answer('Введите ваше ФИО или название компании')
 
+
 @dp.message_handler(state=MeetRoomBookingStage_2.fio_or_company_name)
 async def fio_or_company_name(message: types.Message, state: FSMContext):
     await state.update_data({"name": message.text})
@@ -40,17 +41,16 @@ async def finish_booking(message: types.Message, state: FSMContext):
     state_data = await state.get_data()
     if "type_booking" in state_data and state_data['type_booking']:
         text = "\n".join([f"Кол-во персон: {state_data['personCount']}",
-                   f"Дата бронирования: {state_data['booking_date']}",
-                   f"Время бронирования: {state_data['booking_time']}",
-                   f"Забронировал: {state_data['name']}",
-                   f"Номер телефона: {state_data['telephone']}"])
+                          f"Дата бронирования: {state_data['booking_date']}",
+                          f"Время бронирования: {state_data['booking_time']}",
+                          f"Забронировал: {state_data['name']}",
+                          f"Номер телефона: {state_data['telephone']}"])
     else:
-        text = "\n".join([f"Забронировали: {EVENTS_SPACE[int(state_data['space_type'])-1]}",
-                   f"Кол-во мест: {state_data['space_place']}" if "space_place" in state_data else "",
-                   f"Забронировал: {state_data['name']}",
-                   f"Номер телефона: {state_data['telephone']}"])
+        text = "\n".join([f"Забронировали: {EVENTS_SPACE[int(state_data['space_type']) - 1]}",
+                          f"Кол-во мест: {state_data['space_place']}" if "space_place" in state_data else "",
+                          f"Забронировал: {state_data['name']}",
+                          f"Номер телефона: {state_data['telephone']}"])
     await state.finish()
-    #отправка данных на битрекс
+    # отправка данных на битрекс
     await message.answer(f"{text}")
     await message.answer(f"Бронь успешно создана", reply_markup=await all_finish_booking())
-

@@ -2,8 +2,6 @@ from aiogram import types
 from aiogram.dispatcher.filters import CommandStart, Text
 
 from keyboards.inline.main_inline_kb import menu_keyboard
-from keyboards.inline.meeting_rooms_kb import time_piaker
-
 from loader import dp
 
 

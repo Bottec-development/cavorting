@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.types import InputFile
 from aiogram.utils.markdown import hbold
 
-from keyboards.callback_datas import standard_tariff, mini_office_choice, booking_callback
+from keyboards.callback_datas import standard_tariff, mini_office_choice
 from keyboards.inline.tariff_kb import main_tariff_kb, name_and_description, standard_tariff_kb, mini_office_kb, \
     mini_office_description, smart_office_kb, back_to_tariff
 from loader import dp
@@ -63,7 +63,8 @@ async def information(call: types.CallbackQuery, callback_data: dict):
         photo = InputFile('img/fix.jpg')
     else:
         photo = InputFile('img/team_fix.jpg')
-    await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(office), photo=photo)
+    await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(office),
+                                    photo=photo)
 
 
 @dp.callback_query_handler(mini_office_choice.filter(type="2"))
@@ -81,7 +82,8 @@ async def information(call: types.CallbackQuery, callback_data: dict):
         office_name = f"Мини-офис на 4 персоны"
         photo = InputFile('img/person_4.jpg')
     string = [f"{hbold(office_name)}\n", office_description[person]]
-    await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(office_name), photo=photo)
+    await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(office_name),
+                                    photo=photo)
 
 
 @dp.callback_query_handler(mini_office_choice.filter(type="3"))
@@ -96,7 +98,8 @@ async def information(call: types.CallbackQuery, callback_data: dict):
         office_name = f"Smart-офис на 20 персон"
         photo = InputFile('img/person_20.jpg')
     string = [f"{hbold(office_name)}\n", office_description[person]]
-    await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(office_name), photo=photo)
+    await call.message.answer_photo(caption="\n".join(string), reply_markup=await standard_tariff_kb(office_name),
+                                    photo=photo)
 
 
 @dp.callback_query_handler(text='send_phone_tariff')
