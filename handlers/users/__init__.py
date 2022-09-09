@@ -7,5 +7,7 @@ from .parking import dp
 from .actions_manager_handler import dp
 from .chat_with_manager import dp
 from .support import dp
+from .tariff import dp
+from .test import dp
 
 __all__ = ["dp"]
