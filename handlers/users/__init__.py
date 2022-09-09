@@ -4,5 +4,6 @@ from .booking import dp
 from .event_space import dp
 from .how_to_get import dp
 from .tariff import dp
+from .test import dp
 
 __all__ = ["dp"]
