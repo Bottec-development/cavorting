@@ -117,8 +117,8 @@ async def mini_office_description():
                 'использовавших любую из основных услуг в коворкинге "Калибр" в период 01.01.2022 - 01.06.2022'
     return {
         '1_person': person_1,
-        '2_person': person_3,
-        '3_person': person_4,
+        '3_person': person_3,
+        '4_person': person_4,
         '8_person': person_8,
         '20_person': person_20,
     }
@@ -144,8 +144,8 @@ async def mini_office_kb():
     kb = InlineKeyboardMarkup(row_width=1)
     choice = {
         'На 1 персону': "1_person",
-        'На 3 персоны': "2_person",
-        'На 4 персоны': "3_person",
+        'На 3 персоны': "3_person",
+        'На 4 персоны': "4_person",
     }
     for i in choice:
         button = InlineKeyboardButton(text=i, callback_data=mini_office_choice.new(person=choice[i], type="2"))

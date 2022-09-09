@@ -14,7 +14,6 @@ from states.meeting_room_booking import MeetRoomBookingStage_1
 from utils.misc.time_peaker import inline_timepicker
 
 
-
 @dp.callback_query_handler(Text(startswith="calltoadmin"))
 async def meet_room_start(call: types.CallbackQuery):
     await call.bot.send_contact(chat_id=call.message.chat.id,
@@ -26,7 +25,8 @@ async def meet_room_start(call: types.CallbackQuery):
 async def meet_room_start(call: types.CallbackQuery):
     await call.message.delete()
     await call.message.answer('\n'.join(['Переговорные комнаты\n',
-                                         'Переговорный стол, кресла, Wi-Fi, электричество, кондиционер.']), reply_markup=await meeting_person())
+                                         'Переговорный стол, кресла, Wi-Fi, электричество, кондиционер.']),
+                              reply_markup=await meeting_person())
 
 
 @dp.callback_query_handler(Text(startswith="meetingroompeoplecount"))
@@ -53,7 +53,7 @@ async def booking_date(call: types.CallbackQuery, callback_data: dict, state: FS
             await call.message.answer(text="Выбранная дата не может быть раньше текущей!",
                                       reply_markup=await calandar_kb())
             return
-        #проверка на возможность выбора даты
+        # проверка на возможность выбора даты
         await state.update_data({"booking_date": date.strftime("%Y-%m-%d")})
         await call.message.answer("Выберите время бронирования", reply_markup=await time_piaker())
         await MeetRoomBookingStage_1.select_time.set()
@@ -65,17 +65,17 @@ async def cb_handler(query: types.CallbackQuery, callback_data: Dict[str, str], 
     handle_result = inline_timepicker.handle(query.from_user.id, callback_data)
 
     if handle_result is not None:
-        #проверка на возможность выбора времени
+        # проверка на возможность выбора времени
         state_data = await state.get_data()
         await state.update_data({"booking_time": handle_result})
         await query.bot.edit_message_text("\n".join([f"Кол-во персон: {state_data['personCount']}",
                                                      f"Дата бронирования: {state_data['booking_date']}",
                                                      f"Время бронирования: {handle_result}"]),
-                                    chat_id=query.from_user.id,
-                                    message_id=query.message.message_id,
-                                    reply_markup=await finish_first_stage_booking())
+                                          chat_id=query.from_user.id,
+                                          message_id=query.message.message_id,
+                                          reply_markup=await finish_first_stage_booking())
         await state.reset_state(with_data=False)
     else:
         await query.bot.edit_message_reply_markup(chat_id=query.from_user.id,
-                                            message_id=query.message.message_id,
-                                            reply_markup=inline_timepicker.get_keyboard())
+                                                  message_id=query.message.message_id,
+                                                  reply_markup=inline_timepicker.get_keyboard())

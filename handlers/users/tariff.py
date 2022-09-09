@@ -74,8 +74,8 @@ async def information(call: types.CallbackQuery, callback_data: dict):
     if person == "1_person":
         office_name = f"Мини-офис на 1 персону"
         photo = InputFile('img/person_3.jpg')
-    elif person == "2_person":
-        office_name = f"Мини-офис на 2 персоны"
+    elif person == "3_person":
+        office_name = f"Мини-офис на 3 персоны"
         photo = InputFile('img/person_3.jpg')
     else:
         office_name = f"Мини-офис на 4 персоны"
