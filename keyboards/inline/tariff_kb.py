@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from keyboards.callback_datas import standard_tariff, mini_office_choice, smart_office_choice
+from keyboards.callback_datas import standard_tariff, mini_office_choice, smart_office_choice, booking_callback
 
 
 async def name_and_description():
@@ -171,9 +171,10 @@ async def smart_office_kb():
     return kb
 
 
-async def standard_tariff_kb():
+async def standard_tariff_kb(office_type):
     kb = InlineKeyboardMarkup(row_width=2)
-    button_1 = InlineKeyboardButton(text="Забронировать", callback_data=f'send_phone')
+    button_1 = InlineKeyboardButton(text="Забронировать",
+                                    callback_data=booking_callback.new(t="booking", o=office_type))
     button_2 = InlineKeyboardButton(text="Позвонить", callback_data=f'send_phone_tariff')
     button_3 = InlineKeyboardButton(text='⬅️ Назад', callback_data=f'tariff_with_photo')
     kb.row(button_1, button_2)
