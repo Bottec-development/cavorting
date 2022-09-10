@@ -20,7 +20,7 @@ async def chat_client(message: types.Message, state: FSMContext):
 
         await dp.bot.send_message(
             chat_id=manager_id,
-            text='Чат был остановлен клиентом.'
+            text='Чат был остановлен клиентом.',reply_markup=go_menu
         )
     else:
         text = message.text
@@ -45,7 +45,7 @@ async def chat_manager(message: types.Message, state: FSMContext):
 
         await dp.bot.send_message(
             chat_id=client_id,
-            text='Чат был остановлен менеджером.'
+            text='Чат был остановлен менеджером.', reply_markup=go_menu
         )
     else:
         text = message.text

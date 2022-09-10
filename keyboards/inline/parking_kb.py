@@ -7,7 +7,7 @@ async def parking_keyboard(client_id):
     parking = InlineKeyboardMarkup(row_width=3, inline_keyboard=
     [
         [
-            InlineKeyboardButton(text='Обнулить и оплатить', callback_data='pay_parking')
+            InlineKeyboardButton(text='Обнулить и оплатить', url=SITE_URL)
         ],
         [
             InlineKeyboardButton(text='Обнулить (счет для компании)', callback_data=f'chat_parking_{client_id}')

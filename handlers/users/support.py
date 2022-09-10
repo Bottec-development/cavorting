@@ -2,6 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text
 
+from data.config import ADMIN_ID
 from keyboards.inline.actions_for_manager import actions_manager
 from loader import dp
 from states.chat import Chat
@@ -28,14 +29,11 @@ async def support_get_message(message: types.Message, state: FSMContext):
 
     await message.answer('Мы получили ваше сообщение, в скором времени вам ответят.')
     await state.reset_state(with_data=True)
-    # тут мы сохраняем в бд вопрос и ид юзера
-    # тут мы получаем ид админа и отправляем ему сообщение
-    admin_id = 5023654394
 
     keyboard = await actions_manager(client_id=message.chat.id)
     await dp.bot.send_message(
-        chat_id=admin_id,
-        text='Поступил новый вопрос.\n'
+        chat_id=ADMIN_ID,
+        text='Поступил новый вопрос.\n\n'
              f'{text}\n\n'
              f'Выберите действие на клавиатуре', reply_markup=keyboard
     )

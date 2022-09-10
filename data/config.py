@@ -16,7 +16,7 @@ REDIS_DB_JOBSTORE = int(os.getenv("REDIS_DB_JOBSTORE", default=1))
 REDIS_DB_JOIN_LIST = int(os.getenv("REDIS_DB_JOIN_LIST", default=2))
 
 ADMIN_TELEPHONE = str(os.getenv("ADMIN_TELEPHONE"))
-
+ADMIN_ID = str(os.getenv("ADMIN_ID"))
 SITE_URL = str(os.getenv('SITE_URL'))
 
 admins = [
