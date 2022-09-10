@@ -1,12 +1,12 @@
 from bitrix24 import Bitrix24, BitrixError
 
 
-async def create_lid(name, last_name, second_name, phone, company_name, product_id: int, price: float):
+async def create_lid(title, name, last_name, second_name, phone, company_name, product_id: int, price: float):
     bx24 = Bitrix24('https://b24.kalibr.co/rest/484/ajbtz1jwhheaq3fj')
     try:
         result = bx24.callMethod('crm.lead.add',
                                  fields={
-                                     'TITLE': "Тестовый лид",
+                                     'TITLE': title,
                                      'NAME': name,
                                      'SECOND_NAME': second_name,
                                      "LAST_NAME": last_name,
@@ -26,7 +26,7 @@ async def create_lid(name, last_name, second_name, phone, company_name, product_
                                  }
                                  )
         rows = [
-            {"PRODUCT_ID": product_id, "PRICE": price, "QUANTITY": 2},
+            {"PRODUCT_ID": product_id, "PRICE": price, "QUANTITY": 1},
         ]
 
         bx24.callMethod('crm.lead.productrows.set', id=result, rows=rows)

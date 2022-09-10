@@ -6,5 +6,6 @@ class MeetRoomBookingStage_1(StatesGroup):
     select_time = State()
 
 class MeetRoomBookingStage_2(StatesGroup):
-    fio_or_company_name = State()
+    fio= State()
+    company = State()
     telephone = State()

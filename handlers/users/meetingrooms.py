@@ -8,18 +8,21 @@ from aiogram_calendar import SimpleCalendar, simple_cal_callback
 
 from data.config import ADMIN_TELEPHONE
 from keyboards.inline.meeting_rooms_kb import meeting_person, calandar_kb, finish_first_stage_booking, time_piaker, \
-    meeting_person_count
+    meeting_person_count, meeting_type_room, close_telephone_btn
 from loader import dp
 from states.meeting_room_booking import MeetRoomBookingStage_1
 from utils.misc.time_peaker import inline_timepicker
 
 
 @dp.callback_query_handler(Text(startswith="calltoadmin"))
-async def meet_room_start(call: types.CallbackQuery):
-    await call.bot.send_contact(chat_id=call.message.chat.id,
-                                phone_number=ADMIN_TELEPHONE,
-                                first_name="Коворкинг Калибр")
+async def open_telephone(call: types.CallbackQuery):
+    await call.message.answer_contact(phone_number=ADMIN_TELEPHONE,
+                                      first_name="Коворкинг Калибр",
+                                      reply_markup=await close_telephone_btn())
 
+@dp.callback_query_handler(Text(startswith="closetelephone"))
+async def close_telephone(call: types.CallbackQuery):
+    await call.message.delete()
 
 @dp.callback_query_handler(Text(startswith="meetingrooms"))
 async def meet_room_start(call: types.CallbackQuery):
@@ -28,17 +31,28 @@ async def meet_room_start(call: types.CallbackQuery):
                                          'Переговорный стол, кресла, Wi-Fi, электричество, кондиционер.']),
                               reply_markup=await meeting_person())
 
+@dp.callback_query_handler(Text(startswith="meetingroompeopletype"))
+async def meet_room_start(call: types.CallbackQuery):
+    await call.message.delete()
+    await call.message.answer('Ввыберите тип персон', reply_markup=await meeting_type_room())
 
 @dp.callback_query_handler(Text(startswith="meetingroompeoplecount"))
 async def meet_room_start(call: types.CallbackQuery):
     await call.message.delete()
     await call.message.answer('Ввыберите кол-во персон', reply_markup=await meeting_person_count())
 
+@dp.callback_query_handler(Text(startswith="personType"))
+async def meet_room_person_type(call: types.CallbackQuery, state: FSMContext):
+    await state.update_data({'type_person': int(call.data.split("_")[1])})
+    await call.message.delete()
+    await call.message.answer("Выберите кол-во персон", reply_markup=await meeting_person_count())
 
 @dp.callback_query_handler(Text(startswith="personCount"))
 async def meet_room_person_count(call: types.CallbackQuery, state: FSMContext):
     await state.update_data({'type_booking': 1, 'personCount': call.data.split("_")[1]})
     await call.message.delete()
+
+
     await call.message.answer("Выберите дату бронирования", reply_markup=await calandar_kb())
     await MeetRoomBookingStage_1.select_date.set()
 
@@ -69,6 +83,7 @@ async def cb_handler(query: types.CallbackQuery, callback_data: Dict[str, str], 
         state_data = await state.get_data()
         await state.update_data({"booking_time": handle_result})
         await query.bot.edit_message_text("\n".join([f"Кол-во персон: {state_data['personCount']}",
+                                                     f"Кол-во персон: {state_data['personCount']}",
                                                      f"Дата бронирования: {state_data['booking_date']}",
                                                      f"Время бронирования: {handle_result}"]),
                                           chat_id=query.from_user.id,
