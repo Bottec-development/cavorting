@@ -2,6 +2,7 @@ from aiogram import types
 from aiogram.types import InputFile
 from aiogram.utils.markdown import hbold
 
+from data.config import ADMIN_TELEPHONE
 from keyboards.callback_datas import standard_tariff, mini_office_choice
 from keyboards.inline.tariff_kb import main_tariff_kb, name_and_description, standard_tariff_kb, mini_office_kb, \
     mini_office_description, smart_office_kb, back_to_tariff
@@ -105,5 +106,5 @@ async def information(call: types.CallbackQuery, callback_data: dict):
 @dp.callback_query_handler(text='send_phone_tariff')
 async def send_phone(call: types.CallbackQuery):
     await call.message.delete()
-    await call.message.answer_contact(phone_number="89295000656", first_name="Коворкинг", last_name="Калибр",
+    await call.message.answer_contact(phone_number=ADMIN_TELEPHONE, first_name="Коворкинг", last_name="Калибр",
                                       reply_markup=await back_to_tariff())

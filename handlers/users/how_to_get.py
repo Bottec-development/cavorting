@@ -1,5 +1,6 @@
 from aiogram import types
 
+from data.config import ADMIN_TELEPHONE
 from keyboards.inline.how_to_get_kb import inforamtion_keyboard, back_to_information
 from loader import dp
 
@@ -16,7 +17,7 @@ async def information(call: types.CallbackQuery):
 @dp.callback_query_handler(text='send_phone')
 async def send_phone(call: types.CallbackQuery):
     await call.message.delete()
-    await call.message.answer_contact(phone_number="89295000656", first_name="Коворкинг", last_name="Калибр",
+    await call.message.answer_contact(phone_number=ADMIN_TELEPHONE, first_name="Коворкинг", last_name="Калибр",
                                       reply_markup=await back_to_information())
 
 
