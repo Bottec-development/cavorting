@@ -39,11 +39,11 @@ async def fio_or_company_name(message: types.Message, state: FSMContext):
         return
 
     await state.update_data({"name": message.text})
-    await MeetRoomBookingStage_2.company.set()
-    await message.answer("Введите название вашей компании")
+    await MeetRoomBookingStage_2.telephone.set()
+    await message.answer("Введите ваш контактный номер телефона для связи")
 
 
-@dp.message_handler(state=MeetRoomBookingStage_2.company)
+@dp.message_handler(state=MeetRoomBookingStage_2.fio)
 async def fio_or_company_name(message: types.Message, state: FSMContext):
     await state.update_data({"company": message.text})
     await MeetRoomBookingStage_2.telephone.set()
@@ -82,7 +82,7 @@ async def date_selected(call: types.CallbackQuery, callback_data: dict, state: F
 @dp.callback_query_handler(Text(startswith="finishbooking"))
 async def date_selected(call: types.CallbackQuery, state: FSMContext):
     state_data = await state.get_data()
-    #await call.message.delete()
+    await call.message.delete()
     await call.message.answer(text=f"Заявка оформлена!\nВаша заявка:\n{await get_text_prefinish_bookig(state)}")
     await call.message.answer(f"\nВ скором времени с вами свяжется наш оператор для уточнения остальных деталей.",
                               reply_markup=await all_finish_booking())
@@ -96,8 +96,8 @@ async def date_selected(call: types.CallbackQuery, state: FSMContext):
     title = f"{fin_str} ({state_data['key_booking']}) {'на ('+str(state_data['booking_date']) +' '+ str(state_data['booking_time'])+')' if 'booking_date' in state_data else ''}"
     names = state_data['name'].split(" ")
     bit_indificator = (await get_info(state_data['booking_type']))[state_data['key_booking']]
-    print(title,names[1], names[2], names[0], state_data['telephone'], state_data['company'], bit_indificator[1], float(f"{bit_indificator[0]}.00"))
-    await create_lid(title,names[1], names[2], names[0], state_data['telephone'], state_data['company'], bit_indificator[1], float(f"{bit_indificator[0]}.00"))
+    print(title,names[1], names[2], names[0], state_data['telephone'], bit_indificator[1], float(f"{bit_indificator[0]}.00"))
+    await create_lid(title,names[1], names[2], names[0], state_data['telephone'], '', bit_indificator[1], float(f"{bit_indificator[0]}.00"))
 
 
 
@@ -110,7 +110,7 @@ async def get_text_prefinish_bookig(state: FSMContext):
             f"Дата бронирования: {state_data['booking_date']}",
             f"Время бронирования: {state_data['booking_time']}",
             f"Забронировал: {state_data['name']}",
-            f"Название компании: {state_data['company']}",
+           # f"Название компании: {state_data['company']}",
             f"Номер телефона: {state_data['telephone']}",
             f"Стоимость: {(await get_info(state_data['booking_type']))[state_data['key_booking']][0]}",
         ])
@@ -119,7 +119,7 @@ async def get_text_prefinish_bookig(state: FSMContext):
             f"Забронировали: {state_data['space_type']}" if "space_type" in state_data else f"Тариф: {state_data['booking_type']}",
             f"Время бронирования: {state_data['key_booking']}",
             f"Забронировал: {state_data['name']}",
-            f"Название компании: {state_data['company']}",
+         #   f"Название компании: {state_data['company']}",
             f"Номер телефона: {state_data['telephone']}",
             f"Стоимость: {(await get_info(state_data['booking_type']))[state_data['key_booking']][0] if 'space_type' in state_data else (await get_info(state_data['booking_type']))[state_data['key_booking']][0]}"])
 
