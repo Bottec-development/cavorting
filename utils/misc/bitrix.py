@@ -14,7 +14,6 @@ async def create_lid(title, name, last_name, second_name, phone, company_name, p
                                      "OPENED": "Y",
                                      "ASSIGNED_BY_ID": 232,
                                      "CURRENCY_ID": "RUB",
-                                     "OPPORTUNITY": 12500,
                                      "PHONE": [{"VALUE": phone, "VALUE_TYPE": "WORK"}],
                                      "UF_CRM_1550213429": 68,
                                      "SOURCE_ID": 15,
