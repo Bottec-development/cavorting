@@ -24,10 +24,10 @@ async def create_lid(title, name, last_name, second_name, phone, company_name, p
                                      "REGISTER_SONET_EVENT": "Y"
                                  }
                                  )
-        rows = [
-            {"PRODUCT_ID": product_id, "PRICE": price, "QUANTITY": 1},
-        ]
-
+        rows = {
+            'id': result,
+            'rows': {'PRODUCT_ID': product_id, 'PRICE': price, 'QUANTITY': 1}
+        }
         bx24.callMethod('crm.lead.productrows.set', id=result, rows=rows)
     except BitrixError as message:
         print(message)
