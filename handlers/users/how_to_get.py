@@ -24,5 +24,5 @@ async def send_phone(call: types.CallbackQuery):
 @dp.callback_query_handler(text='send_address')
 async def send_phone(call: types.CallbackQuery):
     await call.message.delete()
-    await call.message.answer(text="Мы находимся по адресу: улица Годовикова, 9с17",
+    await call.message.answer(text="Мы находимся по адресу: Г. Москва, м. Алексеевская, улица Годовикова, дом 9 стр. 17",
                               reply_markup=await back_to_information())
