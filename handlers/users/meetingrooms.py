@@ -83,7 +83,7 @@ async def cb_handler(query: types.CallbackQuery, callback_data: Dict[str, str], 
         state_data = await state.get_data()
         await state.update_data({"booking_time": handle_result})
         await query.bot.edit_message_text("\n".join([f"Кол-во персон: {state_data['personCount']}",
-                                                     f"Кол-во персон: {state_data['personCount']}",
+                                                     f"Тип персон: {'Резидентны' if state_data['type_person'] == 1 else 'Для всех клиентов'}",
                                                      f"Дата бронирования: {state_data['booking_date']}",
                                                      f"Время бронирования: {handle_result}"]),
                                           chat_id=query.from_user.id,

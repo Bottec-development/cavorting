@@ -14,7 +14,7 @@ async def meeting_type_room():
                                                              callback_data=f'personType_1'),
                                     ],
                                     [
-                                        InlineKeyboardButton(text='Обычные',
+                                        InlineKeyboardButton(text='Для всех клиентов',
                                                              callback_data=f'personType_2'),
                                     ],
                                     [
