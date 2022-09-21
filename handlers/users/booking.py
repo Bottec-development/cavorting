@@ -89,28 +89,29 @@ async def date_selected(call: types.CallbackQuery, state: FSMContext):
     print(state_data)
     if "booking_type" in state_data and "meet" in state_data['booking_type']:
         data = state_data['booking_type'].split("_")
-        fin_str = f"Переговорная комната для {'Резидентов' if int(data[1])==1 else 'Группы' if int(data[1])==2 else ''} на {data[2]} места"
+        fin_str = f"Переговорная комната для {'Резидентов' if int(state_data['type_person']) == 1 else 'Для всех клиентов' if int(state_data['type_person']) == 2 else ''} на {data[2]} мест(а)"
     elif "space_type" in state_data or "booking_type" in state_data:
         fin_str = f"{state_data['space_type']}" if "space_type" in state_data else f"Тариф: {state_data['booking_type']}"
 
-    title = f"{fin_str} ({state_data['key_booking']}) {'на ('+str(state_data['booking_date']) +' '+ str(state_data['booking_time'])+')' if 'booking_date' in state_data else ''}"
+    title = f"{fin_str} ({state_data['key_booking']}) {'на (' + str(state_data['booking_date']) + ' ' + str(state_data['booking_time']) + ')' if 'booking_date' in state_data else ''}"
     names = state_data['name'].split(" ")
     bit_indificator = (await get_info(state_data['booking_type']))[state_data['key_booking']]
-    print(title,names[1], names[2], names[0], state_data['telephone'], bit_indificator[1], float(f"{bit_indificator[0]}.00"))
-    await create_lid(title,names[1], names[2], names[0], state_data['telephone'], '', bit_indificator[1], float(f"{bit_indificator[0]}.00"))
-
+    print(title, names[1], names[2], names[0], state_data['telephone'], bit_indificator[1],
+          float(f"{bit_indificator[0]}.00"))
+    await create_lid(title, names[1], names[2], names[0], state_data['telephone'], '', bit_indificator[1],
+                     float(f"{bit_indificator[0]}.00"))
 
 
 async def get_text_prefinish_bookig(state: FSMContext):
     state_data = await state.get_data()
     if "type_booking" in state_data and state_data['type_booking']:
         text = "\n".join([
-            f"Тип персон: {'Резидентны' if state_data['type_person'] else 'Обычные' if state_data['type_person'] == 2 else ''}",
+            f"Тип персон: {'Резидентны' if int(state_data['type_person']) == 1 else 'Для всех клиентов' if int(state_data['type_person']) == 2 else ''}",
             f"Кол-во персон: {state_data['personCount']}",
             f"Дата бронирования: {state_data['booking_date']}",
             f"Время бронирования: {state_data['booking_time']}",
             f"Забронировал: {state_data['name']}",
-           # f"Название компании: {state_data['company']}",
+            # f"Название компании: {state_data['company']}",
             f"Номер телефона: {state_data['telephone']}",
             f"Стоимость: {(await get_info(state_data['booking_type']))[state_data['key_booking']][0]}",
         ])
@@ -119,7 +120,7 @@ async def get_text_prefinish_bookig(state: FSMContext):
             f"Забронировали: {state_data['space_type']}" if "space_type" in state_data else f"Тариф: {state_data['booking_type']}",
             f"Время бронирования: {state_data['key_booking']}",
             f"Забронировал: {state_data['name']}",
-         #   f"Название компании: {state_data['company']}",
+            #   f"Название компании: {state_data['company']}",
             f"Номер телефона: {state_data['telephone']}",
             f"Стоимость: {(await get_info(state_data['booking_type']))[state_data['key_booking']][0] if 'space_type' in state_data else (await get_info(state_data['booking_type']))[state_data['key_booking']][0]}"])
 
