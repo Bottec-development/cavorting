@@ -10,7 +10,7 @@ async def meeting_type_room():
     menu = InlineKeyboardMarkup(row_width=2,
                                 inline_keyboard=[
                                     [
-                                        InlineKeyboardButton(text='Резидентны',
+                                        InlineKeyboardButton(text='Резиденты',
                                                              callback_data=f'personType_1'),
                                     ],
                                     [

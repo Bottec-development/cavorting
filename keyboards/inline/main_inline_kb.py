@@ -15,10 +15,10 @@ async def menu_keyboard():
                                           InlineKeyboardButton(text='Переговорные комнаты',
                                                                callback_data=f'meetingrooms'),
                                       ],
-                                      [
-                                          InlineKeyboardButton(text='Пространство для мероприятий',
-                                                               callback_data=f'eventspace'),
-                                      ],
+                                      # [
+                                      #     InlineKeyboardButton(text='Пространство для мероприятий',
+                                      #                          callback_data=f'eventspace'),
+                                      # ],
                                       [
                                           InlineKeyboardButton(text='Задать вопрос',
                                                                callback_data=f'askquestion'),
