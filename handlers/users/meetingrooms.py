@@ -34,12 +34,12 @@ async def meet_room_start(call: types.CallbackQuery):
 @dp.callback_query_handler(Text(startswith="meetingroompeopletype"))
 async def meet_room_start(call: types.CallbackQuery):
     await call.message.delete()
-    await call.message.answer('Ввыберите тип персон', reply_markup=await meeting_type_room())
+    await call.message.answer('Выберите тип персон', reply_markup=await meeting_type_room())
 
 @dp.callback_query_handler(Text(startswith="meetingroompeoplecount"))
 async def meet_room_start(call: types.CallbackQuery):
     await call.message.delete()
-    await call.message.answer('Ввыберите кол-во персон', reply_markup=await meeting_person_count())
+    await call.message.answer('Выберите кол-во персон', reply_markup=await meeting_person_count())
 
 @dp.callback_query_handler(Text(startswith="personType"))
 async def meet_room_person_type(call: types.CallbackQuery, state: FSMContext):
@@ -59,10 +59,12 @@ async def meet_room_person_count(call: types.CallbackQuery, state: FSMContext):
 
 @dp.callback_query_handler(simple_cal_callback.filter(), state=MeetRoomBookingStage_1.select_date)
 async def booking_date(call: types.CallbackQuery, callback_data: dict, state: FSMContext):
-    date_now = datetime.now()
+    date_now = datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
     selected, date = await SimpleCalendar().process_selection(call, callback_data)
     if selected:
         await call.message.delete()
+        print(date)
+        print(date_now)
         if date < date_now:
             await call.message.answer(text="Выбранная дата не может быть раньше текущей!",
                                       reply_markup=await calandar_kb())
